@@ -38,9 +38,14 @@ static const uint8_t borders[] = {3,5,5,4};
  * attribute of the window. You can test this using `xprop WM_NAME`
  */
 #define LOOK_INTO "WM_NAME"
-static const char *ignore_names[] = {"bar", "xclock"};
+static const char *ignore_names[] = {"bar", "xclock", "Clocks"};
 ///--Menus and Programs---///
-static const char *menucmd[]   = { "", NULL };
+static const char *menucmd[]   = { "dmenu_run", NULL };
+static const char *emacsclient[]   = { "emacsclient", "-c", NULL };
+static const char *xscreensaver[]   = { "xscreensaver-command", "-lock", NULL };
+static const char *firefox[]   = { "firefox", NULL };
+static const char *chatgpt[]   = { "firefox", "--new-window", "https://chat.openai.com", NULL };
+static const char *grayscale[]   = { "toggle-monitor-grayscale.sh", "picom", "--legacy-backends", ">/dev/null", NULL };
 ///--Custom foo---///
 static void halfandcentered(const Arg *arg)
 {
@@ -194,6 +199,11 @@ static key keys[] = {
     {  MOD |SHIFT,        XK_Left,       cursor_move,       {.i=TWOBWM_CURSOR_LEFT}},
     // Start programs
     {  MOD ,              XK_w,          start,             {.com = menucmd}},
+	{  MOD ,              XK_e,          start,             {.com = emacsclient}},
+	{  MOD ,              XK_d,          start,             {.com = xscreensaver}},
+	{  MOD ,              XK_s,          start,             {.com = firefox}},
+	{  MOD |SHIFT ,       XK_s,          start,             {.com = chatgpt}},
+	{  MOD |SHIFT ,       XK_e,          start,             {.com = grayscale}},
     // Exit or restart 2bwm
     {  MOD |CONTROL,      XK_q,          twobwm_exit,       {.i=0}},
     {  MOD |CONTROL,      XK_r,          twobwm_restart,    {.i=0}},

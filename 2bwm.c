@@ -1014,7 +1014,6 @@ setupwin(xcb_window_t win)
 				client->y = parent->y+(parent->height/2.0) - (client->height/2.0);
 				moveresize(client->id, client->x, client->y,
 						client->width, client->height);
-				free(parent);
 				xcb_flush(conn);
 			}
 		}
@@ -1540,7 +1539,7 @@ focusnext_helper(bool arg)
 			head = item = focuswin->wsitem->next;
 			do{
 				cl = item->data;
-				if(!cl->iconic)
+				if(!cl->iconic && !cl->ignore_borders)
 					break;
 				item = item->next;
 			}while(item != head);
@@ -1549,7 +1548,7 @@ focusnext_helper(bool arg)
 			tail = item = focuswin->wsitem->prev;
 			do{
 				cl = item->data;
-				if(!cl->iconic)
+				if(!cl->iconic && !cl->ignore_borders)
 					break;
 				item = item->prev;
 			}while(item != tail);
